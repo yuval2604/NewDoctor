@@ -1,0 +1,59 @@
+<% include ../partials/header %>
+
+
+<div class="container">
+    <form action="/doctors/create" method="POST">
+        <div class="form-group">
+            <label for="formGroupExampleInput">firstname</label>
+            <input type="text" class="form-control" name="firstname" placeholder="enter value">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">lastname</label>
+            <input type="text" class="form-control" name="lastname" placeholder="enter value">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">email</label>
+            <input type="text" class="form-control" name="email" placeholder="enter value">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">phonenumber</label>
+            <input type="text" class="form-control" name="phonenumber" placeholder="enter value">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">sex</label>
+            <input type="text" class="form-control" name="sex" placeholder="enter value">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">specialty</label>
+            <input type="text" class="form-control" name="specialty" placeholder="enter value">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">availability</label>
+            <input type="text" class="form-control" name="availability" placeholder="enter value">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">address</label>
+            <input type="text" class="form-control" name="address" placeholder="enter value">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">price</label>
+            <input type="text" class="form-control" name="price" placeholder="enter value">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">location_lat</label>
+            <input type="text" class="form-control" name="lat" placeholder="enter value">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">location_lng</label>
+            <input type="text" class="form-control" name="lng" placeholder="enter value">
+        </div>
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" name="product_image">
+            <label class="custom-file-label" for="customFile" name="product_image">Choose Img</label>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<% include ../partials/footer %>

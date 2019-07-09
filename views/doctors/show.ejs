@@ -1,0 +1,58 @@
+<% include ../partials/header %>
+
+
+<h1> HELLO Doctor <%= doctor.firstname %></h1>
+
+<% request.forEach(function(request){ %>
+    <!--if(!request.taken) {   ONLY NEW REQUEST !!! -->
+    <form action="/requestcheck/<%= request.id %>" method="GET" id="target">
+        <div class="row">
+            <div class="col m5">
+                <div class="card blue-grey darken-1">
+                    <% if(request.taken) { %>
+                        <div class="alert alert-danger">
+                            <strong>Taken!</strong> Indicates the oppointment is taken.
+                        </div>
+                        <%}%>
+                        <div class="card-content white-text">
+                            <span class="card-title"><%= request.username %></span>
+                            <p><%= request.phonenumber %></p>
+                            <p><%= request.email %></p>
+                            <div class="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="true" >
+                                <input type="text" class="form-control" name="clock" value="12:00">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time" ></span>
+                                </span>
+                            </div>
+                        </div>
+                    <!--<input type="hidden" name="hiddenclock" value="">-->
+                    <button type="submit" class="btn btn-secondary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+
+
+
+<% }); %>
+
+
+<% include ../partials/footer %>
+
+
+<script type="text/javascript">
+    $('.clockpicker').clockpicker()
+        .find('input').change(function(){
+        // TODO: time changed
+        console.log(this.value);
+    });
+    // $("input[name='clock']").change(function(){
+    //
+    //     $("input[type='hidden']").val($("input[name='clock']").val())
+    // });
+
+
+</script>

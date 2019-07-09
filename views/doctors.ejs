@@ -1,0 +1,255 @@
+<% include partials/header %>
+<link rel="stylesheet" type="text/css" href="stylesheets/css/style.css">
+
+<style>
+    /* Always set the map height explicitly to define the size of the div
+     * element that contains the map. */
+    #map {
+        height: 50%;
+        width: 50%;
+    }
+
+</style>
+
+<script>
+    var neighborhoods = [];
+    var markers = [];
+</script>
+
+
+<% doctors.forEach(function(doctor){ %>
+
+    <div class="col-md-4">
+        <div class="testimonial">
+            <div class="testimonial-image">
+                <img class="" src="<%= doctor.product_image %>">
+            </div>
+            <div class="testimonial-content">
+                <p>email: <%= doctor.email %> </p>
+                <p>phonenumber: <%= doctor.phonenumber %> </p>
+                <p>sex: <%= doctor.sex %> </p>
+                <p>specialty: <%= doctor.specialty %> </p>
+                <p>availability: <%= doctor.availability %> </p>
+                <p>address: <%= doctor.address %> </p>
+                <p>price: <%= doctor.price %> </p>
+                <div class="testimonial-meta"> <%= doctor.firstname %> - <%= doctor.lastname%>  </div>
+            </div>
+            <!-- Modal Trigger -->
+            <a class="modal-trigger" href="#modal<%= doctor.id %>"><button type="button"  class="btn btn-custom btn-lg " >Invite Doctor</button></a>
+            <!-- Modal Structure -->
+            <div id="modal<%= doctor.id %>" class="modal" >
+                <div class="row">
+                    <form class="col s12" action="/doctor/<%= doctor.id %>" method="POST">
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="icon_prefix" name="name" type="text" class="validate">
+                                <label for="icon_prefix">First Name</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">phone</i>
+                                <input id="icon_telephone" name="phonenumber" type="tel" class="validate">
+                                <label for="icon_telephone">Telephone</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <input id="email" name="email" type="email" class="validate">
+                                <label for="email">Email</label>
+                            </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-close"> <button type="submit"  class="btn btn-custom btn-lg">Agree </button></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var lat = <%=doctor.location_lat%> ;
+        var lng = <%= doctor.location_lng %> ;
+        var doc_loc = {lat : lat, lng : lng};
+        neighborhoods.push(doc_loc);
+    </script>
+
+<% }); %>
+
+<div id="map"></div>
+
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl-ecnjXeumbnzE8jvmpha25v6E3UOPWg&callback=initMap">
+</script>
+<script src="https://maps.googleapis.com/maps/api/distancematrix/json?x=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=AIzaSyDl-ecnjXeumbnzE8jvmpha25v6E3UOPWg
+">
+</script>
+
+<script>
+
+    function drop() {
+        console.log("Drop");
+        clearMarkers();
+        for (var i = 0; i < neighborhoods.length; i++) {
+            addMarkerWithTimeout(neighborhoods[i], i * 200);
+        }
+    }
+
+    function addMarkerWithTimeout(position, timeout) {
+        console.log("add Markers");
+        window.setTimeout(function () {
+            markers.push(new google.maps.Marker({
+                position: position,
+                map: map,
+                animation: google.maps.Animation.DROP
+            }));
+        }, timeout);
+    }
+
+    function clearMarkers() {
+        console.log("clear Markers");
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+    }
+
+    function initMap() {
+        try {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                console.log("position ", position);
+                var lat_loc = position.coords.latitude
+                console.log("lat loc ",lat_loc)
+                var lng_loc = position.coords.longitude
+                console.log("lng loc ",lng_loc)
+                var myLatLng = {lat: lat_loc, lng: lng_loc};
+                var Doc_loc = new google.maps.LatLng(32.164812, 34.819864);
+
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 12,
+                    center: myLatLng
+                });
+
+                var marker = new google.maps.Marker({
+                    position: myLatLng,
+                    map: map,
+                    title: 'My loctation'
+                });
+
+                drop();
+
+                //console.log(get_Distance(32.164812, 34.819864));
+
+                // var origin1 = myLatLng
+                // var destinationB = Doc_loc;
+                //
+                // //TO GET THE DISTANCE BETWEEN 2 LOCATIONS
+                // var service = new google.maps.DistanceMatrixService();
+                // service.getDistanceMatrix(
+                //     {
+                //         origins: [origin1],
+                //         destinations: [destinationB],
+                //         travelMode: 'DRIVING',
+                //         // transitOptions: TransitOptions,
+                //         // drivingOptions: DrivingOptions,
+                //         // unitSystem: UnitSystem,
+                //         // avoidHighways: Boolean,
+                //         // avoidTolls: Boolean,
+                //     }, callback);
+                //
+                // //return the distance
+                // function callback(response, status) {
+                //     if (status == 'OK') {
+                //         var origins = response.originAddresses;
+                //         var destinations = response.destinationAddresses;
+                //
+                //         for (var i = 0; i < origins.length; i++) {
+                //             var results = response.rows[i].elements;
+                //             for (var j = 0; j < results.length; j++) {
+                //                 var element = results[j];
+                //                 var distance = element.distance.text;
+                //                 var duration = element.duration.text;
+                //                 var from = origins[i];
+                //                 var to = destinations[j];
+                //
+                //                 console.log(element)
+                //                 console.log(distance)
+                //                 console.log(duration)
+                //                 console.log(from)
+                //                 console.log(to)
+                //
+                //             }
+                //         }
+                //     }
+                //}
+
+            });
+        }catch (e) {
+            console.log("catch init map " + e);
+        }
+
+    }
+
+    function get_Distance(lat, lng){
+        try {
+
+            navigator.geolocation.getCurrentPosition(function (position) {
+                console.log(position);
+                var lat_loc = position.coords.latitude;
+                var lng_loc = position.coords.longitude;
+
+                //my location
+                var user_location = {lat: lat_loc, lng: lng_loc};
+                //doctor location
+                //taken from the user variables input
+                var doctor_location = new google.maps.LatLng(lat, lng);
+                var service = new google.maps.DistanceMatrixService();
+                service.getDistanceMatrix(
+                    {
+                        origins: [user_location],
+                        destinations: [doctor_location],
+                        travelMode: 'DRIVING',
+                    }, callback);
+
+                function callback(response, status) {
+                    if (status == 'OK') {
+                        console.log("in the callback")
+                        var origins = response.originAddresses;
+                        var destinations = response.destinationAddresses;
+
+                        for (var i = 0; i < origins.length; i++) {
+                            var results = response.rows[i].elements;
+                            for (var j = 0; j < results.length; j++) {
+                                var element = results[j];
+                                var distance = element.distance.text;
+                                var duration = element.duration.text;
+                                var from = origins[i];
+                                var to = destinations[j];
+
+                                console.log(element)
+                                console.log(distance)
+                                console.log(duration)
+                                console.log(from)
+                                console.log(to)
+                            }
+                        }
+                    }
+                }
+
+            });
+        }catch (e) {
+            console.log("catch get distance " + e);
+        }
+    }
+
+    function make_markers(lat, lng) {
+        console.log("make marker")
+        var Doc_loc = new google.maps.LatLng(lat, lng);
+        var marker = new google.maps.Marker({
+            position: Doc_loc,
+            map: map,
+            title: 'Doctor location'
+        });
+        console.log("render a new marker lat "+ lat +" lng" +lng)
+    }
+</script>
+
+
+<% include partials/footer.ejs %>
+
