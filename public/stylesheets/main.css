@@ -263,7 +263,7 @@
     width: auto;
     display: flex;
     flex-direction: column;
-    margin-left: 300px;
+    margin: auto;
     
   }
 
@@ -439,4 +439,3 @@
       left: 25px;
       animation: move4 3s linear infinite;
     }
-

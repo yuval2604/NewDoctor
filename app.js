@@ -8,21 +8,16 @@ var express = require("express"),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"),
-    Exercise = require("./models/exercise"),
     Doctor = require("./models/doctor"),
-    Comment = require("./models/comment"),
-    User = require("./models/user"),
-    seedDB = require("./seeds");
+    // seedDB = require("./seeds");
 
     sendemail = require("./public/stylesheets/js/emailsender");
 
 
 
 //requring routes    
-var commentRoutes = require("./routes/comments"),
-    doctorRoutes = require("./routes/doctors"),
-    exerciseRoutes = require("./routes/exercises"),
-    indexRoutes = require("./routes/index");
+var
+    doctorRoutes = require("./routes/doctors")
 
 // mongoose.connect("mongodb://localhost/newdoctor");
 
@@ -58,8 +53,7 @@ app.use(function(req, res, next) {
 });
 
 app.use("/", doctorRoutes); // was indexRoutes
-// app.use("/exercises", exerciseRoutes);
-// app.use("/exercises/:id/comments", commentRoutes);
+
 
 
 app.listen(8000);
