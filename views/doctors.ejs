@@ -89,14 +89,6 @@
 
 <div id="map"></div>
 
-<script
-  async
-  defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl-ecnjXeumbnzE8jvmpha25v6E3UOPWg&callback=initMap"
-></script>
-<script src="https://maps.googleapis.com/maps/api/distancematrix/json?x=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=AIzaSyDl-ecnjXeumbnzE8jvmpha25v6E3UOPWg
-"></script>
-
 <script>
   function drop(map) {
     console.log("Drop");
@@ -106,7 +98,6 @@
         lat: neighborhoods[i]["lat"],
         lng: neighborhoods[i]["lng"]
       };
-      console.log("Thelocation", Thelocation);
       marker = new google.maps.Marker({
         position: neighborhoods[i],
         map: map,
@@ -141,6 +132,7 @@
 
     drop(map);
   }
+
   function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }
@@ -205,5 +197,13 @@
     }
   }
 </script>
+
+<script
+  async
+  defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl-ecnjXeumbnzE8jvmpha25v6E3UOPWg&callback=initMap"
+></script>
+<script src="https://maps.googleapis.com/maps/api/distancematrix/json?x=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=AIzaSyDl-ecnjXeumbnzE8jvmpha25v6E3UOPWg
+"></script>
 
 <% include partials/footer.ejs %>
