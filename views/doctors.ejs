@@ -38,7 +38,7 @@
     </div>
     <!-- Modal Trigger -->
     <a class="modal-trigger" href="#modal<%= doctor.id %>">
-      <button type="button" class="btn btn-custom btn-lg ">
+      <button type="button" class="btn btn-custom btn-lg">
         Invite Doctor
       </button>
     </a>
@@ -96,12 +96,12 @@
     for (var i = 0; i < neighborhoods.length; i++) {
       Thelocation = {
         lat: neighborhoods[i]["lat"],
-        lng: neighborhoods[i]["lng"]
+        lng: neighborhoods[i]["lng"],
       };
       marker = new google.maps.Marker({
         position: neighborhoods[i],
         map: map,
-        title: "None"
+        title: "None",
       });
     }
   }
@@ -109,7 +109,7 @@
   var options = {
     enableHighAccuracy: true,
     timeout: 5000,
-    maximumAge: 0
+    maximumAge: 0,
   };
 
   function success(pos) {
@@ -122,12 +122,12 @@
 
     var map = new google.maps.Map(document.getElementById("map"), {
       zoom: 12,
-      center: myLatLng
+      center: myLatLng,
     });
     marker = new google.maps.Marker({
       position: myLatLng,
       map: map,
-      title: "My loctation"
+      title: "My loctation",
     });
 
     drop(map);
@@ -147,7 +147,7 @@
 
   function get_Distance(lat, lng) {
     try {
-      navigator.geolocation.getCurrentPosition(function(position) {
+      navigator.geolocation.getCurrentPosition(function (position) {
         console.log(position);
         var lat_loc = position.coords.latitude;
         var lng_loc = position.coords.longitude;
@@ -162,7 +162,7 @@
           {
             origins: [user_location],
             destinations: [doctor_location],
-            travelMode: "DRIVING"
+            travelMode: "DRIVING",
           },
           callback
         );
@@ -198,10 +198,12 @@
   }
 </script>
 
+<!-- src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl-ecnjXeumbnzE8jvmpha25v6E3UOPWg&callback=initMap" -->
+<!-- AIzaSyDl-ecnjXeumbnzE8jvmpha25v6E3UOPWg -->
 <script
   async
   defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl-ecnjXeumbnzE8jvmpha25v6E3UOPWg&callback=initMap"
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDB-l4Ipn_JY74suI1PUJO5VvR2j2rC97I&callback=initMap"
 ></script>
 <script src="https://maps.googleapis.com/maps/api/distancematrix/json?x=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=AIzaSyDl-ecnjXeumbnzE8jvmpha25v6E3UOPWg
 "></script>
